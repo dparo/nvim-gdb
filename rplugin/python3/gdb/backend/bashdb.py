@@ -7,12 +7,15 @@ from gdb.backend import parser_impl
 from gdb.backend import base
 
 
-class _ParserImpl(parser_impl.ParserImpl):
-    def __init__(self, common, handler):
+class ParserImpl(parser_impl.ParserImpl):
+    """Parser implementation for *shdb."""
+
+    def __init__(self, common, handler, prompt="bashdb"):
+        """ctor."""
         super().__init__(common, handler)
 
         re_jump = re.compile(r'[\r\n]\(([^:]+):(\d+)\):(?=[\r\n])')
-        re_prompt = re.compile(r'[\r\n]bashdb<\(?\d+\)?> $')
+        re_prompt = re.compile(rf'[\r\n]{prompt}<\(?\d+\)?> $')
         re_term = re.compile(r'[\r\n]Debugged program terminated ')
         self.add_trans(self.paused, re_jump, self._paused_jump)
         self.add_trans(self.paused, re_prompt, self._query_b)
@@ -61,7 +64,7 @@ class BashDB(base.BaseBackend):
 
     def create_parser_impl(self, common, handler):
         """Create parser implementation instance."""
-        return _ParserImpl(common, handler)
+        return ParserImpl(common, handler)
 
     def create_breakpoint_impl(self, proxy):
         """Create breakpoint impl instance."""

@@ -13,15 +13,15 @@ from base_proxy import BaseProxy
 from stream_filter import StreamFilter
 
 
-class BashDbProxy(BaseProxy):
+class BashDBProxy(BaseProxy):
     """PTY proxy for bashdb."""
 
     PROMPT = re.compile(rb'[\r\n]bashdb<\(?\d+\)?> ')
     CSEQ = re.compile(rb'\[[^m]*m')
 
-    def __init__(self):
+    def __init__(self, app_name="BashDB"):
         """ctor."""
-        super().__init__("BashDB")
+        super().__init__(app_name)
 
     def process_handle_command(self, cmd, response):
         """Handle callback for custom commands."""
@@ -44,4 +44,4 @@ class BashDbProxy(BaseProxy):
 
 
 if __name__ == '__main__':
-    BashDbProxy().run()
+    BashDBProxy().run()

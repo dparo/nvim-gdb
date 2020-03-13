@@ -29,9 +29,9 @@ class BaseProxy:
     def __init__(self, app_name: str):
         """Create a spawned process."""
         parser = argparse.ArgumentParser(
-            description="Run %s through a filtering proxy." % app_name)
+            description=f"Run {app_name} through a filtering proxy.")
         parser.add_argument('cmd', metavar='ARGS', nargs='+',
-                            help='%s command with arguments' % app_name)
+                            help=f'{app_name} command with arguments')
         parser.add_argument('-a', '--address', metavar='ADDR',
                             help='Local socket to receive commands.')
         args = parser.parse_args()

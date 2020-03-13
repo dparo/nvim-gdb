@@ -13,7 +13,7 @@ def test_smoke(eng, post, terminal_end):
     assert post
     assert terminal_end
     eng.feed(' db')
-    eng.feed('\n', 1500)
+    eng.feed('\n', 2000)
 
     assert {'cur': 'main.sh:22'} == eng.get_signs()
 
@@ -31,7 +31,7 @@ def test_smoke(eng, post, terminal_end):
     eng.feed('<f11>')
     assert {'cur': 'main.sh:7'} == eng.get_signs()
 
-    eng.feed('<c-p>', 200)
+    eng.feed('<c-p>', 300)
     assert {'cur': 'main.sh:18'} == eng.get_signs()
 
     eng.feed('<c-n>')

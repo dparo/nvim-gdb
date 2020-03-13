@@ -16,6 +16,7 @@ from gdb.backend.gdb import Gdb
 from gdb.backend.pdb import Pdb
 from gdb.backend.lldb import Lldb
 from gdb.backend.bashdb import BashDB
+from gdb.backend.zshdb import ZshDB
 
 
 class App(Common):
@@ -38,6 +39,7 @@ class App(Common):
             "bashdb": BashDB,
             "lldb": Lldb,
             "pdb": Pdb,
+            "zshdb": ZshDB
         }
         self.backend = backend_maps[backendStr]()
 
