@@ -13,18 +13,27 @@ class ParserImpl(parser_impl.ParserImpl):
     def __init__(self, common, handler, prompt="bashdb"):
         """ctor."""
         super().__init__(common, handler)
+        self._prompt_seen = False
 
         re_jump = re.compile(r'[\r\n]\(([^:]+):(\d+)\):(?=[\r\n])')
         re_prompt = re.compile(rf'[\r\n]{prompt}<\(?\d+\)?> $')
         re_term = re.compile(r'[\r\n]Debugged program terminated ')
         self.add_trans(self.paused, re_jump, self._paused_jump)
-        self.add_trans(self.paused, re_prompt, self._query_b)
+        self.add_trans(self.paused, re_prompt, self._handle_prompt)
         self.add_trans(self.paused, re_term, self._handle_terminated)
         self.state = self.paused
 
     def _handle_terminated(self, _):
         self.handler.continue_program()
         return self.paused
+
+    def is_paused(self):
+        """Test whether the FSM is in the paused state."""
+        return self._prompt_seen and super().is_paused()
+
+    def _handle_prompt(self, _):
+        self._prompt_seen = True
+        return self._query_b(None)
 
 
 class _BreakpointImpl(base.BaseBreakpoint):

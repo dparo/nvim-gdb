@@ -178,7 +178,8 @@ class App(Common):
         if self.parser.is_paused():
             self.cursor.show()
         # Ensure breakpoints are shown if are queried dynamically
-        self.win.query_breakpoints()
+        if self.parser.is_paused():
+            self.win.query_breakpoints()
 
     def on_tab_leave(self):
         """Actions to execute when a tabpage is left."""
@@ -200,7 +201,8 @@ class App(Common):
                                  " | endif")
             self.keymaps.dispatch_set()
             # Ensure breakpoints are shown if are queried dynamically
-            self.win.query_breakpoints()
+            if self.parser.is_paused():
+                self.win.query_breakpoints()
 
     def on_buf_leave(self):
         """Actions to execute when a buffer is left."""

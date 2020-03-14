@@ -85,7 +85,6 @@ class Win(Common):
                 if self.jump_win != self.vim.current.window:
                     self.vim.current.window = self.jump_win
                 self.vim.command("noswap e %s" % file)
-                self.query_breakpoints()
 
         # Goto the proper line and set the cursor on it
         self.jump_win.cursor = (line, 0)

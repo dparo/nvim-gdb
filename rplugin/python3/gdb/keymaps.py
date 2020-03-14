@@ -32,6 +32,7 @@ class Keymaps(Common):
 
     def set(self):
         """Set buffer-local keymaps."""
+        self.logger.debug("set keymaps")
         for mode, key, cmd in Keymaps.default:
             try:
                 keystroke = self.config.get_or(key, None)
@@ -44,6 +45,7 @@ class Keymaps(Common):
 
     def unset(self):
         """Unset buffer-local keymaps."""
+        self.logger.debug("unset keymaps")
         for mode, key, _ in Keymaps.default:
             try:
                 keystroke = self.config.get_or(key, None)
@@ -62,6 +64,7 @@ class Keymaps(Common):
 
     def set_t(self):
         """Set term-local keymaps."""
+        self.logger.debug("set terminal keymaps")
         for key, cmd in Keymaps.default_t:
             try:
                 keystroke = self.config.get_or(key, None)
