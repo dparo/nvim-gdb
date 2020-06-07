@@ -70,6 +70,7 @@ class App(Common):
         self.keymaps.dispatch_set()
 
         # Start insert mode in the GDB window
+        self.vim.feedkeys(":wincmd L\n")
         self.vim.feedkeys("i")
 
     def start(self):
